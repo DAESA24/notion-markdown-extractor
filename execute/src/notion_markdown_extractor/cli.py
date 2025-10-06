@@ -174,7 +174,7 @@ def extract(page_url: str, output: Optional[str]):
         # Convert to markdown
         click.echo("Converting to Markdown...")
         try:
-            markdown_content = converter.convert_blocks_to_markdown(blocks, output_path)
+            markdown_content = converter.convert_blocks_to_markdown(blocks, output_path, page_title)
         except Exception as e:
             click.echo(f"[ERROR] Conversion failed: {e}", err=True)
             raise click.Abort()

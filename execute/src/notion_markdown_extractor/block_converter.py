@@ -1,6 +1,7 @@
 """Block-to-Markdown conversion logic for Notion blocks."""
 
 from typing import List, Dict, Any, Optional, Callable
+import click
 
 
 class BlockConverter:
@@ -19,7 +20,8 @@ class BlockConverter:
     def convert_blocks_to_markdown(
         self,
         blocks: List[Dict[str, Any]],
-        output_path: Optional[str] = None
+        output_path: Optional[str] = None,
+        page_title: Optional[str] = None
     ) -> str:
         """
         Convert list of Notion blocks to complete Markdown document.
@@ -27,12 +29,17 @@ class BlockConverter:
         Args:
             blocks: List of block objects from Notion API
             output_path: Output file path (needed for image downloads)
+            page_title: Optional page title to include as H1 at the top
 
         Returns:
             Complete markdown document as string
         """
         self.output_path = output_path
         markdown_lines = []
+
+        # Add page title as H1 if provided
+        if page_title:
+            markdown_lines.append(f"# {page_title}")
 
         for block in blocks:
             md_content = self.convert_block_to_markdown(block)
@@ -72,6 +79,7 @@ class BlockConverter:
             "table": self._convert_table,
             "table_row": self._convert_table_row,
             "child_page": self._convert_child_page,
+            "synced_block": self._convert_synced_block,
         }
 
         # Get converter function for block type
@@ -83,8 +91,11 @@ class BlockConverter:
             # Handle nested children if present
             if block.get("children"):
                 children_md = []
+                # Synced blocks are transparent containers - don't add indentation
+                child_indent = indent_level if block_type == "synced_block" else indent_level + 1
+
                 for child in block["children"]:
-                    child_md = self.convert_block_to_markdown(child, indent_level + 1)
+                    child_md = self.convert_block_to_markdown(child, child_indent)
                     if child_md:
                         children_md.append(child_md)
 
@@ -99,10 +110,16 @@ class BlockConverter:
             return ""
 
     def _convert_paragraph(self, block: Dict[str, Any], indent_level: int) -> str:
-        """Convert paragraph block to markdown."""
+        """
+        Convert paragraph block to markdown.
+
+        Note: In Markdown, paragraphs should NOT be indented except when they are
+        children of list items. Indenting by 4+ spaces creates code blocks.
+        """
         text = self._extract_rich_text(block.get("paragraph", {}).get("rich_text", []))
-        indent = "  " * indent_level
-        return f"{indent}{text}" if text else ""
+        # Only apply indentation if this is nested in a list (indent_level from list items)
+        # For now, don't indent paragraphs to avoid code block formatting
+        return text if text else ""
 
     def _convert_heading_1(self, block: Dict[str, Any], indent_level: int) -> str:
         """Convert heading_1 block to markdown."""
@@ -233,6 +250,37 @@ class BlockConverter:
         page_title = child_page.get("title", "Linked Page")
 
         return f"[{page_title} - see separate import]"
+
+    def _convert_synced_block(self, block: Dict[str, Any], indent_level: int) -> str:
+        """
+        Convert synced_block to markdown.
+
+        Synced blocks are Notion's reusable content blocks. They come in two types:
+        - Original/source blocks: synced_from is null, has children content
+        - Reference blocks: synced_from points to source block, may have children
+
+        For Option 1 (simple approach): We just convert the children content directly.
+        This means if a synced block appears multiple times on the page, the content
+        will appear multiple times in the markdown (matching Notion's behavior).
+
+        Args:
+            block: Synced block object from Notion API
+            indent_level: Indentation level for nested blocks
+
+        Returns:
+            Markdown string with synced block content
+        """
+        synced_block = block.get("synced_block", {})
+        synced_from = synced_block.get("synced_from")
+
+        # Both source and reference blocks have children that were fetched recursively
+        # by the notion_client, so we just need to convert those children
+        # The children are already in block.get("children")
+
+        # Note: We return empty string here because the children will be processed
+        # by the parent convert_block_to_markdown function's children handling logic
+        # This allows synced blocks to work exactly like other container blocks
+        return ""
 
     def _extract_rich_text(self, rich_text_array: List[Dict[str, Any]]) -> str:
         """

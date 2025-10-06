@@ -67,8 +67,27 @@ class NotionClient:
                 # If recursive, fetch children for blocks that have them
                 if recursive:
                     for block in blocks:
-                        if block.get("has_children", False):
-                            # Recursively fetch children
+                        # Special handling for synced blocks
+                        if block.get("type") == "synced_block":
+                            synced_block = block.get("synced_block", {})
+                            synced_from = synced_block.get("synced_from")
+
+                            if synced_from and synced_from.get("type") == "block_id":
+                                # This is a reference block - fetch content from source
+                                source_block_id = synced_from.get("block_id")
+                                try:
+                                    children = self.get_blocks(source_block_id, recursive=True)
+                                    block["children"] = children
+                                except Exception as e:
+                                    # Source block might not be accessible - skip
+                                    print(f"[WARNING] Could not fetch synced block source {source_block_id[:12]}: {e}")
+                                    block["children"] = []
+                            elif block.get("has_children", False):
+                                # This is a source block with children
+                                children = self.get_blocks(block["id"], recursive=True)
+                                block["children"] = children
+                        elif block.get("has_children", False):
+                            # Regular block with children
                             children = self.get_blocks(block["id"], recursive=True)
                             block["children"] = children
 
