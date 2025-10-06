@@ -1,7 +1,16 @@
 
-# Test output files
-*.md
-images/
+# Test output files in project root
+/*.md
+!README.md
+/images/
+
+# User context extracted pages (but keep directory structure)
+/user-context/notion-pages/*.md
+/user-context/notion-pages/images/
+
+# Allow documentation
+!docs/
+!docs/**/*.md
 
 # Claude settings
 .claude/settings.local.json
