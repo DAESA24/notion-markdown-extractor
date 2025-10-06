@@ -1,25 +1,28 @@
-# Notion Markdown Extractor Prototype
+# Notion Markdown Extractor
 
-A standalone Python CLI tool that extracts Notion pages and converts them to Markdown files with local image downloads. Built for rapid extraction of business documentation for use with Claude Code.
+A Python CLI tool that extracts Notion pages and converts them to Markdown files with automatic project organization. Built for seamless integration with Claude Code workflows.
 
 ## Overview
 
-This is a **prototype** CLI tool designed for:
-- Extracting individual Notion pages to clean Markdown format
-- Downloading images locally with relative path references
-- Converting special Notion blocks (callouts, tables, toggles) to Markdown equivalents
-- Quick, reliable extraction of 20-25 business proposal documents
+Extract Notion pages to clean Markdown format with automatic organization into your project structure:
+- **Auto-directory creation**: Saves to `user-context/notion-pages/` in your projects
+- **Local image downloads**: All images downloaded with relative path references
+- **Rich block support**: Converts callouts, tables, toggles, synced blocks, and more
+- **Project-aware**: Detects Software Projects and Thought Projects automatically
+- **Cross-project usage**: Global CLI installation works from any directory
 
-**Status**: In Development (Prototype Phase)
+**Status**: MVP Complete ✅
 
 ## Features
 
-✅ Single-page extraction from Notion
-✅ Local image downloads with relative paths
-✅ Rich block type support (headings, lists, code, tables, callouts, toggles)
-✅ UTF-8 encoding for Windows compatibility
-✅ Global CLI installation for cross-project usage
-✅ Clean Markdown output optimized for Claude Code
+✅ **Auto-organizing extractions** - Saves to `user-context/notion-pages/` automatically
+✅ **Project detection** - Recognizes Software Projects and Thought Projects
+✅ **Synced block support** - Extracts reusable Notion content correctly
+✅ **Local image downloads** - All images saved with relative paths
+✅ **Rich block types** - Headings, lists, code, tables, callouts, toggles, and more
+✅ **UTF-8 encoding** - Windows-compatible out of the box
+✅ **Global CLI** - Use from any directory
+✅ **Clean Markdown** - Optimized for Claude Code context
 
 ## Requirements
 
@@ -59,41 +62,85 @@ notion-md configure --token <your-notion-integration-token>
 4. Copy the "Internal Integration Token"
 5. Share the Notion pages you want to extract with this integration
 
-## Usage
+## Quick Start
 
-### Extract a Single Page
+### Basic Usage (Auto-organizing)
 
 ```bash
-# Extract to current directory (uses page title for filename)
-notion-md extract https://www.notion.so/Your-Page-Title-abc123
+# Navigate to your project
+cd "Thought Projects/my-research-project"
 
-# Extract to specific file
-notion-md extract https://www.notion.so/Your-Page-Title-abc123 --output ~/Documents/business-proposal.md
+# Extract a Notion page (auto-saves to user-context/notion-pages/)
+notion-md extract "https://www.notion.so/Your-Page-Title-abc123"
 
-# Extract with custom output directory
-notion-md extract <notion-url> --output ./exports/my-document.md
+# ✅ Saved to: ./user-context/notion-pages/your-page-title.md
+# ✅ Images to: ./user-context/notion-pages/images/
 ```
 
-### Check Configuration Status
+### Custom Output Location
+
+```bash
+# Override auto-directory with explicit path
+notion-md extract "https://notion.so/Page-abc123" --output ~/Documents/notes.md
+```
+
+### Check Configuration
 
 ```bash
 notion-md status
 ```
 
+## How Auto-Directory Works
+
+The tool automatically organizes extracted Notion pages:
+
+**1. Detects Project Directory**
+   - Checks if you're in "Software Projects" or "Thought Projects"
+   - Falls back to creating structure anywhere
+
+**2. Creates Structure**
+   ```
+   your-project/
+   └── user-context/
+       └── notion-pages/
+           ├── page-title.md
+           ├── another-doc.md
+           └── images/
+               ├── diagram-1.png
+               └── chart-2.png
+   ```
+
+**3. Saves with Clean Filenames**
+   - Page titles converted to kebab-case
+   - Images downloaded locally with relative paths
+
+**Benefits**:
+- ✅ Consistent organization across all projects
+- ✅ Files ready for Claude Code context
+- ✅ No manual directory creation
+- ✅ Override with `--output` when needed
+
 ## Output Structure
 
-When you extract a page, the tool creates:
-
+**Auto-organized** (default in projects):
 ```
-output-directory/
-├── your-document.md          # Markdown file
-└── images/                   # Downloaded images
-    ├── diagram-1.png
-    ├── chart-2.jpg
-    └── screenshot-3.png
+user-context/notion-pages/
+├── framework-document.md
+├── meeting-notes.md
+├── strategic-plan.md
+└── images/
+    ├── architecture-diagram.png
+    ├── workflow-chart.png
+    └── screenshot.jpg
 ```
 
-The Markdown file uses relative paths: `![alt text](./images/diagram-1.png)`
+**Custom location** (with `--output` flag):
+```
+your-custom-path/
+├── custom-name.md
+└── images/
+    └── downloaded-images.png
+```
 
 ## Supported Notion Block Types
 
@@ -131,11 +178,10 @@ Content that was inside the toggle
 ```
 
 ### Deferred to Future Versions
-- Databases
+- Databases (inline and full-page)
 - Embedded content
 - Video/Audio
-- Column layouts
-- Synced blocks
+- Column layouts (content extracted but layout flattened)
 
 ## Development
 
@@ -217,9 +263,14 @@ rm -rf ~/.notion-md/
 
 ## Documentation
 
-- **PRD**: `plan/prd-notion-md-extractor-prototype-2025-10-06.md`
-- **Original Project Plan**: `user-context/notion-md-cli-project-plan-2025-10-06.md`
-- **Workspace Guidelines**: `../../CLAUDE.md`
+### User Documentation
+- **[Usage Guide](docs/usage.md)** - Complete CLI reference and examples
+- **[Notion Setup Guide](docs/notion-setup.md)** - Integration setup and permissions
+
+### Project Documentation
+- **[PRD](plan/prd-notion-md-extractor-prototype-2025-10-06.md)** - Product requirements
+- **[Project Checkpoints](project-checkpoints/)** - Development session notes
+- **[Workspace Guidelines](../../CLAUDE.md)** - BMAD workflow context
 
 ## License
 

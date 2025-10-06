@@ -237,3 +237,51 @@ class Storage:
         dir_path = Path(path)
         dir_path.mkdir(parents=True, exist_ok=True)
         return dir_path
+
+    def ensure_project_directories(self, base_path: Optional[Path] = None) -> Path:
+        """
+        Create user-context/notion-pages/ structure if it doesn't exist.
+
+        This creates the standardized directory structure for storing
+        extracted Notion pages within project directories.
+
+        Args:
+            base_path: Base directory (defaults to current working directory)
+
+        Returns:
+            Path to notion-pages directory
+        """
+        base = base_path or Path.cwd()
+        notion_pages_dir = base / "user-context" / "notion-pages"
+        notion_pages_dir.mkdir(parents=True, exist_ok=True)
+        return notion_pages_dir
+
+    def get_auto_output_path(
+        self,
+        page_title: str,
+        base_path: Optional[Path] = None
+    ) -> str:
+        """
+        Generate automatic output path in user-context/notion-pages/.
+
+        This method implements the auto-directory feature that organizes
+        extracted Notion pages into a consistent location within projects.
+
+        Args:
+            page_title: Title of the Notion page
+            base_path: Base directory (defaults to current working directory)
+
+        Returns:
+            Full path string to output file in user-context/notion-pages/
+
+        Example:
+            >>> storage.get_auto_output_path("My Page")
+            "./user-context/notion-pages/my-page.md"
+        """
+        # Ensure directories exist
+        notion_pages_dir = self.ensure_project_directories(base_path)
+
+        # Generate filename from page title
+        filename = self.sanitize_filename(page_title) + ".md"
+
+        return str(notion_pages_dir / filename)

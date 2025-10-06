@@ -7,6 +7,7 @@ from .config import Config
 from .notion_client import NotionClient
 from .block_converter import BlockConverter
 from .storage import Storage
+from .project_detector import ProjectDetector
 
 
 @click.group()
@@ -154,13 +155,21 @@ def extract(page_url: str, output: Optional[str]):
             click.echo(f"[ERROR] Failed to fetch page: {e}", err=True)
             raise click.Abort()
 
-        # Determine output path
-        if output:
-            output_path = output
-        else:
-            output_path = storage.get_output_path(page_title)
+        # Determine output path with auto-directory support
+        detector = ProjectDetector()
 
-        click.echo(f"Output file: {output_path}")
+        if output:
+            # User specified explicit output - use it
+            output_path = output
+            click.echo(f"Output file: {output_path}")
+        elif detector.should_use_auto_directory(explicit_output=False):
+            # Use auto-directory feature
+            output_path = storage.get_auto_output_path(page_title)
+            click.echo(f"Auto-organizing to: {output_path}")
+        else:
+            # Fallback to current behavior (shouldn't reach here with current logic)
+            output_path = storage.get_output_path(page_title)
+            click.echo(f"Output file: {output_path}")
 
         # Fetch page blocks
         click.echo("Fetching page content...")
