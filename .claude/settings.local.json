@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude auth status)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(env)",
+      "Bash(claude mcp:*)",
+      "Bash(where claude)",
+      "Read(//c/Users/drewa/.config/**)",
+      "Bash(cat:*)",
+      "Bash(echo $PWD)",
+      "Bash(echo:*)",
+      "Read(//c/Users/drewa/My Drive/Claude Code Workspace/**)",
+      "Bash(python:*)",
+      "Bash(npx:*)",
+      "Bash(NOTION_API_KEY=\"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\" npx -y @notionhq/notion-mcp-server)",
+      "Bash(export NOTION_API_KEY=\"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\")",
+      "Bash(timeout 5 npx -y @notionhq/notion-mcp-server)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "enableAllProjectMcpServers": false
+}
