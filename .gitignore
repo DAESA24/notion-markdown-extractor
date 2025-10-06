@@ -1,0 +1,7 @@
+
+# Test output files
+*.md
+images/
+
+# Claude settings
+.claude/settings.local.json
