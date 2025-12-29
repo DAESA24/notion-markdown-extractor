@@ -116,46 +116,46 @@ class BlockConverter:
         Note: In Markdown, paragraphs should NOT be indented except when they are
         children of list items. Indenting by 4+ spaces creates code blocks.
         """
-        text = self._extract_rich_text(block.get("paragraph", {}).get("rich_text", []))
+        text = self._extract_rich_text((block.get("paragraph") or {}).get("rich_text", []))
         # Only apply indentation if this is nested in a list (indent_level from list items)
         # For now, don't indent paragraphs to avoid code block formatting
         return text if text else ""
 
     def _convert_heading_1(self, block: Dict[str, Any], indent_level: int) -> str:
         """Convert heading_1 block to markdown."""
-        text = self._extract_rich_text(block.get("heading_1", {}).get("rich_text", []))
+        text = self._extract_rich_text((block.get("heading_1") or {}).get("rich_text", []))
         return f"# {text}"
 
     def _convert_heading_2(self, block: Dict[str, Any], indent_level: int) -> str:
         """Convert heading_2 block to markdown."""
-        text = self._extract_rich_text(block.get("heading_2", {}).get("rich_text", []))
+        text = self._extract_rich_text((block.get("heading_2") or {}).get("rich_text", []))
         return f"## {text}"
 
     def _convert_heading_3(self, block: Dict[str, Any], indent_level: int) -> str:
         """Convert heading_3 block to markdown."""
-        text = self._extract_rich_text(block.get("heading_3", {}).get("rich_text", []))
+        text = self._extract_rich_text((block.get("heading_3") or {}).get("rich_text", []))
         return f"### {text}"
 
     def _convert_bulleted_list(self, block: Dict[str, Any], indent_level: int) -> str:
         """Convert bulleted_list_item block to markdown."""
-        text = self._extract_rich_text(block.get("bulleted_list_item", {}).get("rich_text", []))
+        text = self._extract_rich_text((block.get("bulleted_list_item") or {}).get("rich_text", []))
         indent = "  " * indent_level
         return f"{indent}- {text}"
 
     def _convert_numbered_list(self, block: Dict[str, Any], indent_level: int) -> str:
         """Convert numbered_list_item block to markdown."""
-        text = self._extract_rich_text(block.get("numbered_list_item", {}).get("rich_text", []))
+        text = self._extract_rich_text((block.get("numbered_list_item") or {}).get("rich_text", []))
         indent = "  " * indent_level
         return f"{indent}1. {text}"
 
     def _convert_quote(self, block: Dict[str, Any], indent_level: int) -> str:
         """Convert quote block to markdown."""
-        text = self._extract_rich_text(block.get("quote", {}).get("rich_text", []))
+        text = self._extract_rich_text((block.get("quote") or {}).get("rich_text", []))
         return f"> {text}"
 
     def _convert_code(self, block: Dict[str, Any], indent_level: int) -> str:
         """Convert code block to markdown with syntax highlighting."""
-        code_block = block.get("code", {})
+        code_block = block.get("code") or {}
         text = self._extract_rich_text(code_block.get("rich_text", []))
         language = code_block.get("language", "")
 
@@ -163,8 +163,8 @@ class BlockConverter:
 
     def _convert_callout(self, block: Dict[str, Any], indent_level: int) -> str:
         """Convert callout block to blockquote with emoji."""
-        callout = block.get("callout", {})
-        icon = callout.get("icon", {})
+        callout = block.get("callout") or {}
+        icon = callout.get("icon") or {}
         emoji = icon.get("emoji", "[!]") if icon.get("type") == "emoji" else "[!]"
         text = self._extract_rich_text(callout.get("rich_text", []))
 
@@ -172,7 +172,7 @@ class BlockConverter:
 
     def _convert_toggle(self, block: Dict[str, Any], indent_level: int) -> str:
         """Convert toggle block to flattened heading + content."""
-        toggle = block.get("toggle", {})
+        toggle = block.get("toggle") or {}
         text = self._extract_rich_text(toggle.get("rich_text", []))
 
         # Use heading level based on context (default to ###)
@@ -184,14 +184,14 @@ class BlockConverter:
 
     def _convert_image(self, block: Dict[str, Any], indent_level: int) -> str:
         """Convert image block to markdown image with local download."""
-        image = block.get("image", {})
+        image = block.get("image") or {}
         image_type = image.get("type")
 
         # Get image URL
         if image_type == "external":
-            image_url = image.get("external", {}).get("url", "")
+            image_url = (image.get("external") or {}).get("url", "")
         elif image_type == "file":
-            image_url = image.get("file", {}).get("url", "")
+            image_url = (image.get("file") or {}).get("url", "")
         else:
             return ""
 
@@ -210,14 +210,14 @@ class BlockConverter:
 
     def _convert_file(self, block: Dict[str, Any], indent_level: int) -> str:
         """Convert file block to markdown link."""
-        file = block.get("file", {})
+        file = block.get("file") or {}
         file_type = file.get("type")
 
         # Get file URL
         if file_type == "external":
-            file_url = file.get("external", {}).get("url", "")
+            file_url = (file.get("external") or {}).get("url", "")
         elif file_type == "file":
-            file_url = file.get("file", {}).get("url", "")
+            file_url = (file.get("file") or {}).get("url", "")
         else:
             return ""
 
@@ -235,8 +235,8 @@ class BlockConverter:
 
     def _convert_table_row(self, block: Dict[str, Any], indent_level: int) -> str:
         """Convert table_row block to markdown table row."""
-        table_row = block.get("table_row", {})
-        cells = table_row.get("cells", [])
+        table_row = block.get("table_row") or {}
+        cells = table_row.get("cells") or []
 
         # Convert each cell
         cell_texts = [self._extract_rich_text(cell) for cell in cells]
@@ -246,7 +246,7 @@ class BlockConverter:
 
     def _convert_child_page(self, block: Dict[str, Any], indent_level: int) -> str:
         """Convert child_page reference to placeholder with page name."""
-        child_page = block.get("child_page", {})
+        child_page = block.get("child_page") or {}
         page_title = child_page.get("title", "Linked Page")
 
         return f"[{page_title} - see separate import]"
@@ -270,7 +270,7 @@ class BlockConverter:
         Returns:
             Markdown string with synced block content
         """
-        synced_block = block.get("synced_block", {})
+        synced_block = block.get("synced_block") or {}
         synced_from = synced_block.get("synced_from")
 
         # Both source and reference blocks have children that were fetched recursively
