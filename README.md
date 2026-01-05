@@ -2,6 +2,22 @@
 
 A Python CLI tool that extracts Notion pages and converts them to Markdown files with automatic project organization. Built for seamless integration with Claude Code workflows.
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Output Structure](#output-structure)
+- [Supported Notion Block Types](#supported-notion-block-types)
+- [Development](#development)
+- [Troubleshooting](#troubleshooting)
+- [Uninstalling](#uninstalling)
+- [Roadmap](#roadmap)
+- [Documentation](#documentation)
+- [Credits](#credits)
+
 ## Overview
 
 Extract Notion pages to clean Markdown format with automatic organization into your project structure:
@@ -89,36 +105,6 @@ notion-md extract "https://notion.so/Page-abc123" --output ~/Documents/notes.md
 ```bash
 notion-md status
 ```
-
-## How Auto-Directory Works
-
-The tool automatically organizes extracted Notion pages:
-
-**1. Uses Current Directory**
-   - Creates structure in whatever directory you run from
-   - No special project detection required
-
-**2. Creates Structure**
-   ```
-   your-project/
-   └── user-context/
-       └── notion-pages/
-           ├── page-title.md
-           ├── another-doc.md
-           └── images/
-               ├── diagram-1.png
-               └── chart-2.png
-   ```
-
-**3. Saves with Clean Filenames**
-   - Page titles converted to kebab-case
-   - Images downloaded locally with relative paths
-
-**Benefits**:
-- ✅ Consistent organization across all projects
-- ✅ Files ready for Claude Code context
-- ✅ No manual directory creation
-- ✅ Override with `--output` when needed
 
 ## Output Structure
 
@@ -248,13 +234,15 @@ rm -rf ~/.notion-md/
 
 ## Roadmap
 
-### Current: Prototype (v0.1)
+### MVP Complete
+
 - ✅ Single-page extraction
 - ✅ Local image downloads
 - ✅ Core block types
 - ✅ Global CLI installation
 
-### Future: Enhanced Version (v2.0)
+### Future: Enhanced Version
+
 - Batch extraction from databases
 - Automatic link following
 - Advanced block types (databases, embeds)
@@ -264,13 +252,18 @@ rm -rf ~/.notion-md/
 ## Documentation
 
 ### User Documentation
-- **[Usage Guide](docs/usage.md)** - Complete CLI reference and examples
-- **[Notion Setup Guide](docs/notion-setup.md)** - Integration setup and permissions
+
+- **[Usage Guide](docs/user-docs/usage.md)** - Complete CLI reference and examples
+- **[Notion Setup Guide](docs/user-docs/notion-setup.md)** - Integration setup and permissions
 
 ### Project Documentation
-- **[PRD](plan/prd-notion-md-extractor-prototype-2025-10-06.md)** - Product requirements
-- **[Project Checkpoints](project-checkpoints/)** - Development session notes
-- **[Workspace Guidelines](../../CLAUDE.md)** - BMAD workflow context
+
+- **[PRD](docs/project-planning-artifacts/prd-notion-md-extractor-prototype-2025-10-06.md)** - Product requirements
+- **[Architecture](docs/architecture.md)** - System architecture and design decisions
+
+## Credits
+
+This project was developed using the [BMAD Method](https://github.com/bmad-code-org/BMAD-METHOD) - an AI-driven agile development framework for building software with AI agents.
 
 ## License
 
@@ -278,10 +271,10 @@ Internal tool for personal/business use.
 
 ## Support
 
-For issues or questions about this prototype, refer to the PRD or project documentation in `plan/` and `user-context/` directories.
+For issues or questions, refer to the PRD or project documentation in the `docs/` directory.
 
 ---
 
 **Built with:** Python 3.13.7 | UV Package Manager | Click CLI Framework | Notion API
 
-**Status**: Prototype - Fast extraction for immediate business needs
+**Status**: MVP Complete
