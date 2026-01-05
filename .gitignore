@@ -4,9 +4,8 @@
 !README.md
 /images/
 
-# User context extracted pages (but keep directory structure)
-/user-context/notion-pages/*.md
-/user-context/notion-pages/images/
+# User context directory (local working files)
+user-context/
 
 # Allow documentation
 !docs/
@@ -14,6 +13,10 @@
 
 # Claude settings
 .claude/settings.local.json
+.mcp.json
+# VS Code workspace (local paths)
+*.code-workspace
+
 __pycache__/
 *.pyc
 desktop.ini
