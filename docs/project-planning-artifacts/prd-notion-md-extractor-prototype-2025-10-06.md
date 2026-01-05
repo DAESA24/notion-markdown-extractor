@@ -26,7 +26,7 @@ This PRD defines requirements for building a standalone Python CLI tool that ext
 
 ### Functional Requirements
 
-#### FR1: API Authentication
+#### FR1: API Authentication ✅ COMPLETE
 - **Requirement**: Configure and store Notion API integration token
 - **Priority**: P0 (Critical)
 - **Acceptance Criteria**:
@@ -34,7 +34,7 @@ This PRD defines requirements for building a standalone Python CLI tool that ext
   - Token stored securely for reuse
   - Configuration status visible to user
 
-#### FR2: Single Page Extraction
+#### FR2: Single Page Extraction ✅ COMPLETE
 - **Requirement**: Extract individual Notion page to Markdown file
 - **Priority**: P0 (Critical)
 - **Acceptance Criteria**:
@@ -44,7 +44,7 @@ This PRD defines requirements for building a standalone Python CLI tool that ext
   - Save to specified output file path
   - UTF-8 encoding on Windows
 
-#### FR3: Block Type Support
+#### FR3: Block Type Support ✅ COMPLETE
 - **Requirement**: Convert priority Notion block types to Markdown
 - **Priority**: P0 (Critical)
 - **Block Types** (priority order):
@@ -63,7 +63,7 @@ This PRD defines requirements for building a standalone Python CLI tool that ext
   - Toggle blocks flattened to regular text with headings
   - Internal page links converted to placeholder text with document name
 
-#### FR4: Global CLI Tool
+#### FR4: Global CLI Tool ✅ COMPLETE
 - **Requirement**: Install CLI tool globally for use from any directory
 - **Priority**: P0 (Critical)
 - **Acceptance Criteria**:
@@ -92,7 +92,7 @@ This PRD defines requirements for building a standalone Python CLI tool that ext
 - Python 3.12+ (confirmed: 3.13.7 available)
 - UTF-8 encoding support
 
-#### FR5: Image Download and Management
+#### FR5: Image Download and Management ✅ COMPLETE
 - **Requirement**: Download images from Notion and save locally
 - **Priority**: P0 (Critical)
 - **Acceptance Criteria**:
@@ -101,6 +101,33 @@ This PRD defines requirements for building a standalone Python CLI tool that ext
   - Markdown uses relative paths to reference local images
   - Handle image download failures gracefully (log error, skip image, continue)
   - Support common image formats (PNG, JPG, GIF, WebP)
+
+### Implemented Beyond MVP Scope
+
+The following features were implemented during MVP development but were not in the original requirements:
+
+#### Synced Block Support
+
+- **Implementation**: Full support for Notion's synced/reusable content blocks
+- **Behavior**: Both source and reference synced blocks are rendered with their content
+- **Location**: `block_converter.py` - `_convert_synced_block()` method
+- **Note**: Content appears inline where synced blocks are placed (matches Notion's display behavior)
+
+#### Auto-Directory Organization
+
+- **Implementation**: Automatic output to `user-context/notion-pages/` when run from project directories
+- **Behavior**: Detects project context and organizes extracted pages into consistent location
+- **Location**: `storage.py` - `get_auto_output_path()`, `project_detector.py`
+- **Note**: Can be overridden with explicit `--output` flag
+
+#### Rate Limiting with Exponential Backoff
+
+- **Implementation**: Automatic retry with exponential backoff for API rate limits (429 errors)
+- **Behavior**: Retries up to 3 times with 1s, 2s, 4s delays
+- **Location**: `notion_client.py` - `_fetch_blocks_with_retry()` method
+- **Note**: Prevents failures during extraction of large pages
+
+---
 
 ### Out of Scope (Deferred to Phase 2)
 
@@ -602,10 +629,10 @@ uv tool uninstall notion-markdown-extractor
 
 **Document Information:**
 - **Title**: Product Requirements Document: Notion Markdown Extractor Prototype
-- **Version**: 1.1
-- **Status**: Draft → Review → Approved
+- **Version**: 1.2
+- **Status**: ✅ Complete (MVP Implemented)
 - **Created**: 2025-10-06
-- **Last Modified**: 2025-10-06
+- **Last Modified**: 2026-01-05
 - **Author**: Claude Code (with Drew A.)
 - **Project**: notion-markdown-extractor
 - **File Location**: `plan/prd-notion-md-extractor-prototype-2025-10-06.md`
@@ -616,6 +643,7 @@ uv tool uninstall notion-markdown-extractor
 |---------|------|--------|---------|
 | 1.0 | 2025-10-06 | Claude Code | Initial PRD based on draft project plan and user discussion |
 | 1.1 | 2025-10-06 | Claude Code | Updated based on sample Notion page analysis: Added image download requirement (FR5), updated block type support (tables, callouts, toggles), added conversion specifications, updated timeline to 3.5 hours, added image handling technical details |
+| 1.2 | 2026-01-05 | Claude Code | MVP complete: Added ✅ status markers to all FRs, documented implemented-beyond-scope features (synced blocks, auto-directory, rate limiting), updated document status to Complete |
 
 **Approval:**
 
