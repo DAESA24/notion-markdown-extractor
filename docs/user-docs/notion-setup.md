@@ -343,9 +343,9 @@ Gives integration access only to specific pages.
 
 ---
 
-## Example: Setting Up for a Thought Project
+## Example: Setting Up for a Project
 
-Let's say you have a Thought Project with multiple Notion pages to extract.
+Let's say you have a project with multiple Notion pages to extract.
 
 ### Scenario
 
@@ -379,7 +379,7 @@ Virgo Capital Research (folder)
 
 4. **Extract from terminal**:
    ```bash
-   cd "Thought Projects/virgo-capital-sor-opportunity"
+   cd virgo-capital-sor-opportunity
 
    notion-md extract "https://notion.so/Strategic-Overview-abc123"
    notion-md extract "https://notion.so/2-Year-Growth-Plan-def456"

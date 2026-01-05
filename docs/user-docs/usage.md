@@ -84,11 +84,11 @@ notion-md extract "https://www.notion.so/My-Page-Title-abc123def456"
 
 The tool uses **automatic directory organization**:
 
-#### In Project Directories (Recommended)
-When you run the command from inside a **Software Projects** or **Thought Projects** directory:
+#### Auto-Directory (Default)
+When you run the command without `--output`, files are organized automatically:
 
 ```bash
-cd "Thought Projects/my-research-project"
+cd my-research-project
 notion-md extract "https://www.notion.so/Research-Notes-abc123"
 
 # → Saves to: ./user-context/notion-pages/research-notes.md
@@ -96,21 +96,9 @@ notion-md extract "https://www.notion.so/Research-Notes-abc123"
 ```
 
 The tool automatically:
-1. Detects you're in a project directory
-2. Creates `user-context/notion-pages/` if it doesn't exist
-3. Saves the markdown file there with a kebab-case filename
-4. Downloads images to the `images/` subdirectory
-
-#### In Other Directories (Fallback)
-When run from any other directory:
-
-```bash
-cd ~/Downloads
-notion-md extract "https://www.notion.so/My-Page-abc123"
-
-# → Still creates: ./user-context/notion-pages/my-page.md
-# → You can move this directory to your project later
-```
+1. Creates `user-context/notion-pages/` in the current directory if it doesn't exist
+2. Saves the markdown file there with a kebab-case filename
+3. Downloads images to the `images/` subdirectory
 
 ---
 
@@ -119,10 +107,9 @@ notion-md extract "https://www.notion.so/My-Page-abc123"
 ### How It Works
 
 **Default Behavior (No `--output` flag)**:
-1. Checks if current directory is in "Software Projects" or "Thought Projects"
-2. Creates `./user-context/notion-pages/` structure
-3. Saves file as `<page-title-kebab-case>.md`
-4. Downloads images to `./user-context/notion-pages/images/`
+1. Creates `./user-context/notion-pages/` in current directory
+2. Saves file as `<page-title-kebab-case>.md`
+3. Downloads images to `./user-context/notion-pages/images/`
 
 **Benefits**:
 - ✅ Consistent organization across all projects
@@ -217,11 +204,11 @@ notion-md extract "https://notion.so/My-Page-abc123" -o output.md
 
 ## Examples
 
-### Thought Project Workflow
+### Project Workflow
 
 ```bash
-# Navigate to your thought project
-cd "Thought Projects/virgo-capital-sor-opportunity"
+# Navigate to your project
+cd my-project
 
 # Extract multiple Notion pages
 notion-md extract "https://notion.so/Framework-Page-abc123"
@@ -236,19 +223,7 @@ notion-md extract "https://notion.so/Meeting-Notes-ghi789"
 #     ├── diagram1.png
 #     ├── chart2.png
 #     └── ...
-```
 
-### Software Project Workflow
-
-```bash
-# Navigate to your software project
-cd "Software Projects/my-app"
-
-# Extract design docs
-notion-md extract "https://notion.so/Architecture-Design-abc123"
-notion-md extract "https://notion.so/API-Specification-def456"
-
-# All saved to: ./user-context/notion-pages/
 # Available as context when working with Claude Code
 ```
 
@@ -273,7 +248,7 @@ Create a shell script to extract multiple pages:
 #!/bin/bash
 # extract-project-docs.sh
 
-cd "Thought Projects/my-project"
+cd my-project
 
 # Array of Notion URLs
 PAGES=(
@@ -420,7 +395,7 @@ def hello_world():
 ## Tips & Best Practices
 
 ### 1. Organize in Project Directories
-Always run from your Software Projects or Thought Projects directory to use auto-organization.
+Run from your project directory to use auto-organization.
 
 ### 2. Share All Related Pages
 Before extraction, share:

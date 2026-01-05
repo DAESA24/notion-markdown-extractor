@@ -8,7 +8,7 @@ Extract Notion pages to clean Markdown format with automatic organization into y
 - **Auto-directory creation**: Saves to `user-context/notion-pages/` in your projects
 - **Local image downloads**: All images downloaded with relative path references
 - **Rich block support**: Converts callouts, tables, toggles, synced blocks, and more
-- **Project-aware**: Detects Software Projects and Thought Projects automatically
+- **Project-aware**: Works from any project directory
 - **Cross-project usage**: Global CLI installation works from any directory
 
 **Status**: MVP Complete ✅
@@ -16,7 +16,7 @@ Extract Notion pages to clean Markdown format with automatic organization into y
 ## Features
 
 ✅ **Auto-organizing extractions** - Saves to `user-context/notion-pages/` automatically
-✅ **Project detection** - Recognizes Software Projects and Thought Projects
+✅ **Project detection** - Auto-organizes in any project directory
 ✅ **Synced block support** - Extracts reusable Notion content correctly
 ✅ **Local image downloads** - All images saved with relative paths
 ✅ **Rich block types** - Headings, lists, code, tables, callouts, toggles, and more
@@ -45,7 +45,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ### 2. Install the CLI Tool Globally
 
 ```bash
-cd "Software Projects/notion-markdown-extractor"
+cd notion-markdown-extractor/execute
 uv tool install .
 ```
 
@@ -68,7 +68,7 @@ notion-md configure --token <your-notion-integration-token>
 
 ```bash
 # Navigate to your project
-cd "Thought Projects/my-research-project"
+cd my-research-project
 
 # Extract a Notion page (auto-saves to user-context/notion-pages/)
 notion-md extract "https://www.notion.so/Your-Page-Title-abc123"
@@ -94,9 +94,9 @@ notion-md status
 
 The tool automatically organizes extracted Notion pages:
 
-**1. Detects Project Directory**
-   - Checks if you're in "Software Projects" or "Thought Projects"
-   - Falls back to creating structure anywhere
+**1. Uses Current Directory**
+   - Creates structure in whatever directory you run from
+   - No special project detection required
 
 **2. Creates Structure**
    ```
@@ -203,7 +203,7 @@ notion-markdown-extractor/
 
 ```bash
 # Navigate to project
-cd "Software Projects/notion-markdown-extractor/execute"
+cd notion-markdown-extractor/execute
 
 # Install dependencies
 uv add click notion-client python-dotenv requests Pillow
