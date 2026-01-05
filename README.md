@@ -58,14 +58,20 @@ powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-### 2. Install the CLI Tool Globally
+### 2. Clone the Repository
+
+```bash
+git clone https://github.com/DAESA24/notion-markdown-extractor.git
+```
+
+### 3. Install the CLI Tool Globally
 
 ```bash
 cd notion-markdown-extractor/execute
 uv tool install .
 ```
 
-### 3. Configure Notion API Token
+### 4. Configure Notion API Token
 
 ```bash
 notion-md configure --token <your-notion-integration-token>
