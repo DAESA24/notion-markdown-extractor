@@ -2,6 +2,15 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../../../pbcs/pbc-web-crawling"
+		},
+		{
+			"path": "../../../.claude/skills"
+		},
+		{
+			"path": "../../../.claude/commands"
 		}
 	],
 	"settings": {
