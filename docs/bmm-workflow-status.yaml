@@ -1,0 +1,92 @@
+# BMM Workflow Status
+# Tracks progress through BMad Method phases for notion-markdown-extractor
+
+generated: "2026-01-04"
+project: "notion-markdown-extractor"
+project_type: "cli-tool"
+selected_track: "bmad-method"
+field_type: "brownfield"
+workflow_path: "_bmad/bmm/workflows/workflow-status/paths/method-brownfield.yaml"
+
+# Existing artifacts found during init
+existing_artifacts:
+  prd: "docs/project-planning-artifacts/prd-notion-md-extractor-prototype-2025-10-06.md"
+  notion_api_docs: "docs/notion-api-docs/"
+  codebase: "execute/src/notion_markdown_extractor/"
+
+workflow_status:
+  # Prerequisite - Brownfield Documentation
+  - id: document-project
+    phase: prerequisite
+    status: required
+    agent: analyst
+    command: "/bmad:bmm:workflows:document-project"
+    purpose: "Analyze existing codebase to create reference documentation for AI agents"
+    note: "Run first to give agents context about current implementation"
+
+  # Phase 0 - Discovery (all skipped per user choice)
+  - id: brainstorm-project
+    phase: 0-discovery
+    status: skipped
+    note: "User chose no discovery workflows"
+
+  - id: research
+    phase: 0-discovery
+    status: skipped
+    note: "User chose no discovery workflows"
+
+  - id: product-brief
+    phase: 0-discovery
+    status: skipped
+    note: "User chose no discovery workflows"
+
+  # Phase 1 - Planning
+  - id: prd
+    phase: 1-planning
+    status: "docs/project-planning-artifacts/prd-notion-md-extractor-prototype-2025-10-06.md"
+    agent: pm
+    command: "/bmad:bmm:workflows:create-prd"
+    note: "PRD exists from Oct 2025 - review/update as needed for v2.0"
+
+  - id: create-ux-design
+    phase: 1-planning
+    status: skipped
+    note: "CLI tool - no UI components"
+
+  # Phase 2 - Solutioning
+  - id: create-architecture
+    phase: 2-solutioning
+    status: recommended
+    agent: architect
+    command: "/bmad:bmm:workflows:create-architecture"
+    purpose: "Distill brownfield context into focused solution design"
+    note: "Highly recommended for brownfield to prevent agent confusion"
+
+  - id: create-epics-and-stories
+    phase: 2-solutioning
+    status: required
+    agent: pm
+    command: "/bmad:bmm:workflows:create-epics-and-stories"
+    purpose: "Break down PRD into implementable epics and stories"
+
+  - id: test-design
+    phase: 2-solutioning
+    status: recommended
+    agent: tea
+    command: "/bmad:bmm:workflows:testarch-test-design"
+    purpose: "System-level testability review before implementation"
+
+  - id: implementation-readiness
+    phase: 2-solutioning
+    status: required
+    agent: architect
+    command: "/bmad:bmm:workflows:check-implementation-readiness"
+    purpose: "Validate PRD + Architecture + Epics alignment before coding"
+
+  # Phase 3 - Implementation
+  - id: sprint-planning
+    phase: 3-implementation
+    status: required
+    agent: sm
+    command: "/bmad:bmm:workflows:sprint-planning"
+    purpose: "Create sprint plan with prioritized stories"
