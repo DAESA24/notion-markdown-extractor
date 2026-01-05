@@ -1,0 +1,122 @@
+{
+  "workflow_version": "1.2.0",
+  "timestamps": {
+    "started": "2026-01-04T19:30:00Z",
+    "last_updated": "2026-01-04T21:50:00Z",
+    "completed": "2026-01-04T21:50:00Z"
+  },
+  "mode": "initial_scan",
+  "scan_level": "deep",
+  "project_root": "c:\\Users\\drewa\\work\\dev\\notion-markdown-extractor",
+  "output_folder": "c:\\Users\\drewa\\work\\dev\\notion-markdown-extractor\\docs",
+  "completed_steps": [
+    {
+      "step": "step_1",
+      "status": "completed",
+      "timestamp": "2026-01-04T19:35:00Z",
+      "summary": "Classified as monolith with 1 part, project_type=cli"
+    },
+    {
+      "step": "step_2",
+      "status": "completed",
+      "timestamp": "2026-01-04T20:10:00Z",
+      "summary": "Found 9 project docs + 32 API reference docs"
+    },
+    {
+      "step": "step_3",
+      "status": "completed",
+      "timestamp": "2026-01-04T21:32:00Z",
+      "summary": "Tech stack: Python 3.12+, Click CLI, UV package manager, notion-client SDK"
+    },
+    {
+      "step": "step_4",
+      "status": "completed",
+      "timestamp": "2026-01-04T21:35:00Z",
+      "summary": "Conditional analysis complete - CLI type has minimal requirements"
+    },
+    {
+      "step": "step_5",
+      "status": "completed",
+      "timestamp": "2026-01-04T21:40:00Z",
+      "summary": "Source tree analysis written to source-tree-analysis.md"
+    },
+    {
+      "step": "step_6",
+      "status": "completed",
+      "timestamp": "2026-01-04T21:42:00Z",
+      "summary": "Development guide written to development-guide.md"
+    },
+    {
+      "step": "step_7",
+      "status": "skipped",
+      "timestamp": "2026-01-04T21:42:00Z",
+      "summary": "Skipped - single-part project, no multi-part integration"
+    },
+    {
+      "step": "step_8",
+      "status": "completed",
+      "timestamp": "2026-01-04T21:45:00Z",
+      "summary": "Architecture documentation written to architecture.md"
+    },
+    {
+      "step": "step_9",
+      "status": "completed",
+      "timestamp": "2026-01-04T21:47:00Z",
+      "summary": "Project overview written to project-overview.md"
+    },
+    {
+      "step": "step_10",
+      "status": "completed",
+      "timestamp": "2026-01-04T21:48:00Z",
+      "summary": "Master index written to index.md"
+    },
+    {
+      "step": "step_11",
+      "status": "completed",
+      "timestamp": "2026-01-04T21:49:00Z",
+      "summary": "Validation complete, no incomplete docs detected"
+    },
+    {
+      "step": "step_12",
+      "status": "completed",
+      "timestamp": "2026-01-04T21:50:00Z",
+      "summary": "Workflow finalized"
+    }
+  ],
+  "current_step": "completed",
+  "project_types": [
+    {
+      "part_id": "main",
+      "project_type_id": "cli",
+      "display_name": "CLI Tool"
+    }
+  ],
+  "findings": {
+    "project_classification": {
+      "repository_type": "monolith",
+      "parts_count": 1,
+      "primary_language": "Python",
+      "framework": "Click CLI",
+      "package_manager": "uv",
+      "python_version": "3.12+",
+      "entry_point": "notion-md"
+    },
+    "technology_stack": {
+      "language": "Python 3.12+",
+      "framework": "Click CLI",
+      "package_manager": "UV",
+      "build_system": "uv_build",
+      "dependencies": ["click", "notion-client", "pillow", "python-dotenv", "pyyaml", "requests"],
+      "dev_dependencies": ["pytest", "pytest-cov", "pytest-mock"]
+    }
+  },
+  "outputs_generated": [
+    "project-scan-report.json",
+    "index.md",
+    "project-overview.md",
+    "architecture.md",
+    "source-tree-analysis.md",
+    "development-guide.md"
+  ],
+  "resume_instructions": "Workflow completed successfully"
+}

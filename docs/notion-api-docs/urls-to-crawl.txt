@@ -1,0 +1,53 @@
+# Notion API Documentation URLs for notion-markdown-extractor
+# Generated: 2025-12-29
+# Total: 32 pages (17 core + 15 future database support)
+
+# === CORE - Essential for Current Features ===
+
+# Guides
+https://developers.notion.com/docs/getting-started
+https://developers.notion.com/docs/working-with-page-content
+https://developers.notion.com/docs/working-with-files-and-media
+https://developers.notion.com/docs/retrieving-files
+https://developers.notion.com/docs/importing-external-files
+
+# Reference - Objects
+https://developers.notion.com/reference/intro
+https://developers.notion.com/reference/block
+https://developers.notion.com/reference/rich-text
+https://developers.notion.com/reference/page
+https://developers.notion.com/reference/page-property-values
+https://developers.notion.com/reference/file-object
+https://developers.notion.com/reference/parent-object
+
+# Reference - API Endpoints
+https://developers.notion.com/reference/retrieve-a-page
+https://developers.notion.com/reference/get-block-children
+https://developers.notion.com/reference/retrieve-a-block
+https://developers.notion.com/reference/request-limits
+https://developers.notion.com/reference/status-codes
+
+# === FUTURE - For Database Support ===
+
+# Guides
+https://developers.notion.com/docs/working-with-databases
+https://developers.notion.com/docs/upgrade-guide-2025-09-03
+
+# Reference - Database/Data Source Objects
+https://developers.notion.com/reference/database
+https://developers.notion.com/reference/data-source
+https://developers.notion.com/reference/property-object
+https://developers.notion.com/reference/property-item-object
+
+# Reference - Data Source API Endpoints
+https://developers.notion.com/reference/create-a-data-source
+https://developers.notion.com/reference/retrieve-a-data-source
+https://developers.notion.com/reference/query-a-data-source
+https://developers.notion.com/reference/filter-data-source-entries
+https://developers.notion.com/reference/sort-data-source-entries
+
+# Reference - Database API Endpoints (Legacy)
+https://developers.notion.com/reference/post-database-query
+https://developers.notion.com/reference/post-database-query-filter
+https://developers.notion.com/reference/post-database-query-sort
+https://developers.notion.com/reference/retrieve-a-database
