@@ -2,6 +2,7 @@
 # Test output files in project root
 /*.md
 !README.md
+!CLAUDE.md
 /images/
 
 # User context directory (local working files)
