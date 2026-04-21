@@ -11,7 +11,7 @@ dependencies = [
     "click>=8.3.0",
     "notion-client>=2.5.0",
     "pillow>=11.3.0",
-    "python-dotenv>=1.1.1",
+    "python-dotenv>=1.2.2",
     "pyyaml>=6.0.3",
     "requests>=2.32.5",
 ]
